@@ -1,0 +1,41 @@
+import time
+
+def pomodoro_timer(work_duration=25, short_break=5, long_break=15, pomodoros_before_long_break=4):
+    """
+    Pomodoro Timer that alternates between work and break sessions.
+
+    Parameters:
+    - work_duration (int): Duration of the work session in minutes (default 25 minutes).
+    - short_break (int): Duration of the short break in minutes (default 5 minutes).
+    - long_break (int): Duration of the long break in minutes (default 15 minutes).
+    - pomodoros_before_long_break (int): Number of Pomodoros before a long break (default 4).
+    """
+    pomodoros_completed = 0
+    
+    while True:
+        # Work session
+        print(f"Work for {work_duration} minutes!")
+        countdown(work_duration * 60)
+        pomodoros_completed += 1
+
+        # Short break after work
+        if pomodoros_completed % pomodoros_before_long_break == 0:
+            print(f"Time for a long break! Take {long_break} minutes.")
+            countdown(long_break * 60)
+        else:
+            print(f"Time for a short break! Take {short_break} minutes.")
+            countdown(short_break * 60)
+
+def countdown(seconds):
+    """Simple countdown timer to display time left in a human-readable format."""
+    while seconds:
+        mins, secs = divmod(seconds, 60)
+        timeformat = '{:02d}:{:02d}'.format(mins, secs)
+        print(timeformat, end='\r')
+        time.sleep(1)
+        seconds -= 1
+    print("Time's up! \n")
+
+# Start the Pomodoro timer
+if __name__ == "__main__":
+    pomodoro_timer()
